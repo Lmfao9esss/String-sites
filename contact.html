@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Contact — String Sites®</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=Epilogue:wght@300;400;500;600;700;800;900&family=Instrument+Serif:ital@0;1&family=DM+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --black: #0a0a0a; --white: #f5f2ed; --off-white: #e8e4dd;
+  --grey-100: #d4d0c9; --grey-200: #b0aba3; --grey-300: #8a847b;
+  --grey-400: #5c5750; --grey-500: #3a3632; --accent: #c8ff00;
+  --font-display: 'Instrument Serif', serif;
+  --font-body: 'Epilogue', sans-serif;
+  --font-mono: 'DM Mono', monospace;
+  --ease: cubic-bezier(0.16, 1, 0.3, 1);
+}
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+html{font-size:16px;-webkit-font-smoothing:antialiased}
+body{font-family:var(--font-body);background:var(--black);color:var(--white);overflow-x:hidden;cursor:none}
+a{color:inherit;text-decoration:none;cursor:none}button{cursor:none;border:none;background:none;font-family:inherit}
+::selection{background:var(--accent);color:var(--black)}
+
+.cursor{position:fixed;top:0;left:0;width:16px;height:16px;background:var(--accent);border-radius:50%;pointer-events:none;z-index:99999;mix-blend-mode:difference;transition:width 0.35s var(--ease),height 0.35s var(--ease),margin 0.35s var(--ease);margin:-8px 0 0 -8px}
+.cursor.hovering{width:56px;height:56px;margin:-28px 0 0 -28px}
+
+.grain{position:fixed;inset:-50%;width:200%;height:200%;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");pointer-events:none;z-index:9998;animation:grainShift 0.5s steps(4) infinite}
+@keyframes grainShift{0%{transform:translate(0,0)}25%{transform:translate(-2%,-1%)}50%{transform:translate(1%,2%)}75%{transform:translate(-1%,-2%)}100%{transform:translate(2%,1%)}}
+
+.nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:28px 48px;display:flex;align-items:center;justify-content:space-between;mix-blend-mode:difference}
+.nav-logo{font-family:var(--font-body);font-size:0.85rem;font-weight:700;letter-spacing:0.08em;text-transform:uppercase}
+.nav-logo sup{font-size:0.5rem;vertical-align:super;margin-left:2px;font-weight:400}
+.nav-right{display:flex;align-items:center;gap:40px}
+.nav-link{font-family:var(--font-mono);font-size:0.7rem;font-weight:400;letter-spacing:0.04em;text-transform:uppercase;color:var(--grey-200);transition:color 0.3s ease}
+.nav-link:hover{color:var(--white)}
+.nav-back{font-family:var(--font-mono);font-size:0.7rem;letter-spacing:0.04em;text-transform:uppercase;color:var(--grey-200);display:flex;align-items:center;gap:8px;transition:color 0.3s ease}
+.nav-back:hover{color:var(--white)}
+.nav-back svg{transition:transform 0.3s var(--ease)}
+.nav-back:hover svg{transform:translateX(-4px)}
+.nav-cta-pill{font-family:var(--font-mono);font-size:0.7rem;font-weight:500;letter-spacing:0.04em;text-transform:uppercase;padding:10px 24px;border-radius:100px;border:1px solid rgba(245,242,237,0.25);color:var(--white);transition:background 0.3s ease,color 0.3s ease}
+.nav-cta-pill:hover{background:var(--white);color:var(--black)}
+
+.s-reveal{opacity:0;transform:translateY(60px);transition:opacity 1s var(--ease),transform 1s var(--ease)}
+.s-reveal.in-view{opacity:1;transform:translateY(0)}
+.s-label{font-family:var(--font-mono);font-size:0.65rem;letter-spacing:0.14em;text-transform:uppercase;color:var(--grey-300);margin-bottom:20px;display:flex;align-items:center;gap:12px}
+.s-label::before{content:'';width:32px;height:1px;background:var(--grey-400)}
+
+/* Page Hero */
+.pg-hero{min-height:75vh;display:flex;flex-direction:column;justify-content:flex-end;padding:0 48px 80px;position:relative}
+.pg-hero-num{font-family:var(--font-mono);font-size:0.7rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--grey-400);margin-bottom:20px;overflow:hidden}
+.pg-hero-num span{display:inline-block;transform:translateY(100%);animation:slideUp 0.8s var(--ease) 0.3s forwards}
+.pg-hero-title{font-family:var(--font-display);font-size:clamp(3.5rem,9vw,9rem);font-weight:400;line-height:0.92;letter-spacing:-0.03em;margin-bottom:32px}
+.pg-hero-title .line{display:block;overflow:hidden}
+.pg-hero-title .line-inner{display:block;transform:translateY(110%);animation:slideUp 1s var(--ease) forwards}
+.pg-hero-title .line:nth-child(1) .line-inner{animation-delay:0.4s}
+.pg-hero-title .line:nth-child(2) .line-inner{animation-delay:0.55s}
+.pg-hero-title em{font-style:italic;color:var(--grey-300)}
+@keyframes slideUp{to{transform:translateY(0)}}
+.pg-hero-sub{max-width:560px;font-size:1rem;font-weight:300;line-height:1.8;color:var(--grey-200);opacity:0;animation:fadeIn 1s ease 1s forwards}
+@keyframes fadeIn{to{opacity:1}}
+
+/* Content sections */
+.pg-section{padding:100px 48px}
+.pg-section-border{border-top:1px solid rgba(245,242,237,0.06)}
+.pg-split{display:grid;grid-template-columns:1fr 1fr;gap:100px;align-items:start}
+.pg-split-label{font-family:var(--font-mono);font-size:0.65rem;letter-spacing:0.14em;text-transform:uppercase;color:var(--grey-400);margin-bottom:28px;display:flex;align-items:center;gap:12px}
+.pg-split-label::before{content:'';width:24px;height:1px;background:var(--grey-400)}
+.pg-heading{font-family:var(--font-display);font-size:clamp(2rem,4.5vw,4rem);font-weight:400;line-height:1.05;letter-spacing:-0.02em;margin-bottom:28px}
+.pg-heading em{font-style:italic;color:var(--grey-300)}
+.pg-text{font-size:0.95rem;font-weight:300;line-height:1.85;color:var(--grey-200);margin-bottom:20px}
+.pg-text:last-child{margin-bottom:0}
+
+/* Process Steps */
+.pg-step{display:grid;grid-template-columns:48px 1fr;gap:20px;padding:32px 0;border-top:1px solid rgba(245,242,237,0.06)}
+.pg-step:last-child{border-bottom:1px solid rgba(245,242,237,0.06)}
+.pg-step-num{font-family:var(--font-mono);font-size:0.65rem;color:var(--accent);padding-top:4px}
+.pg-step-title{font-family:var(--font-display);font-size:1.4rem;font-weight:400;margin-bottom:8px}
+.pg-step-desc{font-size:0.85rem;font-weight:300;line-height:1.7;color:var(--grey-300);max-width:500px}
+
+/* Deliverables grid */
+.pg-deliv-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:20px}
+.pg-deliv{padding:24px;border:1px solid rgba(245,242,237,0.06);border-radius:12px;transition:border-color 0.3s ease}
+.pg-deliv:hover{border-color:rgba(245,242,237,0.15)}
+.pg-deliv-icon{font-size:1.3rem;margin-bottom:10px}
+.pg-deliv-name{font-size:0.9rem;font-weight:600;margin-bottom:4px}
+.pg-deliv-desc{font-size:0.78rem;font-weight:300;color:var(--grey-300);line-height:1.6}
+
+/* Big stat */
+.pg-stat-bar{padding:80px 48px;border-top:1px solid rgba(245,242,237,0.06);border-bottom:1px solid rgba(245,242,237,0.06);display:flex;justify-content:center;gap:100px}
+.pg-stat{text-align:center}
+.pg-stat-val{font-family:var(--font-display);font-size:4rem;font-weight:400;color:var(--accent);line-height:1}
+.pg-stat-label{font-family:var(--font-mono);font-size:0.65rem;letter-spacing:0.06em;text-transform:uppercase;color:var(--grey-300);margin-top:10px}
+
+/* CTA */
+.pg-cta{min-height:60vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:100px 48px;border-top:1px solid rgba(245,242,237,0.06)}
+.pg-cta-heading{font-family:var(--font-display);font-size:clamp(2.5rem,6vw,6rem);font-weight:400;line-height:0.95;letter-spacing:-0.03em;margin-bottom:28px}
+.pg-cta-heading em{font-style:italic;color:var(--grey-300)}
+.pg-cta-sub{max-width:420px;font-size:0.9rem;font-weight:300;line-height:1.7;color:var(--grey-200);margin-bottom:36px}
+.pg-cta-btn{display:inline-flex;align-items:center;gap:12px;padding:20px 48px;border-radius:100px;background:var(--accent);color:var(--black);font-size:0.88rem;font-weight:700;letter-spacing:0.02em;text-transform:uppercase;transition:transform 0.35s var(--ease),box-shadow 0.35s ease}
+.pg-cta-btn:hover{transform:translateY(-3px);box-shadow:0 12px 40px rgba(200,255,0,0.15)}
+.pg-cta-btn svg{transition:transform 0.3s var(--ease)}
+.pg-cta-btn:hover svg{transform:translateX(4px)}
+
+/* Footer */
+.footer{padding:40px 48px;border-top:1px solid rgba(245,242,237,0.06);display:flex;align-items:center;justify-content:space-between}
+.footer-logo{font-family:var(--font-body);font-size:0.75rem;font-weight:700;letter-spacing:0.08em;text-transform:uppercase}
+.footer-links{display:flex;gap:32px;list-style:none}
+.footer-links a{font-family:var(--font-mono);font-size:0.65rem;color:var(--grey-400);letter-spacing:0.04em;text-transform:uppercase;transition:color 0.3s ease}
+.footer-links a:hover{color:var(--white)}
+.footer-copy{font-family:var(--font-mono);font-size:0.6rem;color:var(--grey-400)}
+
+@media(max-width:1024px){.pg-split{grid-template-columns:1fr;gap:60px}.pg-stat-bar{flex-wrap:wrap;gap:48px}}
+@media(max-width:768px){
+  .nav{padding:20px 24px}.nav-link{display:none}.pg-hero{padding:0 24px 50px;min-height:65vh}
+  .pg-section{padding:70px 24px}.pg-deliv-grid{grid-template-columns:1fr}
+  .pg-stat-bar{padding:50px 24px;gap:36px}.pg-cta{padding:70px 24px}
+  .footer{padding:30px 24px;flex-direction:column;gap:16px;text-align:center}.footer-links{flex-wrap:wrap;justify-content:center}
+  .cursor{display:none}body{cursor:auto}a,button{cursor:pointer}
+}
+
+
+.contact-layout{padding:140px 48px 100px;display:grid;grid-template-columns:1fr 1fr;gap:100px;align-items:start}
+.contact-form{display:flex;flex-direction:column;gap:20px}
+.form-group{display:flex;flex-direction:column;gap:6px}
+.form-label{font-family:var(--font-mono);font-size:.65rem;letter-spacing:.1em;text-transform:uppercase;color:var(--grey-300)}
+.form-input,.form-textarea{background:rgba(245,242,237,.04);border:1px solid rgba(245,242,237,.08);border-radius:12px;padding:16px 20px;font-family:var(--font-body);font-size:.9rem;color:var(--white);outline:none;transition:border-color .3s ease}
+.form-input:focus,.form-textarea:focus{border-color:var(--accent)}
+.form-input::placeholder,.form-textarea::placeholder{color:var(--grey-400)}
+.form-textarea{min-height:160px;resize:vertical}
+.form-submit{display:inline-flex;align-items:center;justify-content:center;gap:12px;padding:18px 40px;border-radius:100px;background:var(--accent);color:var(--black);font-size:.88rem;font-weight:700;letter-spacing:.02em;text-transform:uppercase;transition:transform .35s var(--ease),box-shadow .35s ease;cursor:pointer;width:fit-content;font-family:var(--font-body)}
+.form-submit:hover{transform:translateY(-3px);box-shadow:0 12px 40px rgba(200,255,0,.15)}
+.ci-item{display:flex;flex-direction:column;gap:6px;margin-bottom:20px}
+.ci-label{font-family:var(--font-mono);font-size:.6rem;letter-spacing:.1em;text-transform:uppercase;color:var(--grey-400)}
+.ci-val{font-size:1rem;font-weight:400}
+.ci-val a{color:var(--accent);border-bottom:1px solid transparent;transition:border-color .3s ease}
+.ci-val a:hover{border-color:var(--accent)}
+.free-call-box{margin-top:20px;padding:24px;border:1px solid rgba(245,242,237,.06);border-radius:12px}
+.free-call-title{font-family:var(--font-display);font-size:1.1rem;margin-bottom:8px}
+.free-call-desc{font-size:.85rem;font-weight:300;color:var(--grey-200);line-height:1.7}
+@media(max-width:1024px){.contact-layout{grid-template-columns:1fr;gap:60px}}
+@media(max-width:768px){.contact-layout{padding:120px 24px 60px}}
+
+</style>
+</head>
+<body>
+<div class="cursor" id="cursor"></div>
+<div class="grain"></div>
+
+<nav class="nav">
+  <a href="index.html" class="nav-logo">String Sites<sup>®</sup></a>
+  <div class="nav-right">
+    <a href="index.html" class="nav-back"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M13 8H3M7 4l-4 4 4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg> Back</a>
+    <a href="about.html" class="nav-link">About</a>
+  </div>
+</nav>
+
+<section class="pg-hero">
+  <div class="pg-hero-num"><span>Contact</span></div>
+  <h1 class="pg-hero-title">
+    <span class="line"><span class="line-inner">Let's talk</span></span>
+    <span class="line"><span class="line-inner"><em>about your project.</em></span></span>
+  </h1>
+  <p class="pg-hero-sub">Fill out the form below and I'll get back to you within 24 hours. Or call me directly — I pick up.</p>
+</section>
+
+<section class="contact-layout">
+  <div class="s-reveal">
+    <form class="contact-form" action="https://formsubmit.co/Brushingmadeasy@gmail.com" method="POST">
+      <input type="hidden" name="_subject" value="New Project Inquiry — String Sites">
+      <input type="hidden" name="_captcha" value="false">
+      <input type="text" name="_honey" style="display:none">
+      <div class="form-group"><label class="form-label">Your Name</label><input type="text" name="name" class="form-input" placeholder="John Smith" required></div>
+      <div class="form-group"><label class="form-label">Email Address</label><input type="email" name="email" class="form-input" placeholder="you@company.com" required></div>
+      <div class="form-group"><label class="form-label">Phone (optional)</label><input type="tel" name="phone" class="form-input" placeholder="(613) 000-0000"></div>
+      <div class="form-group"><label class="form-label">Tell me about your project</label><textarea name="message" class="form-textarea" placeholder="What does your business do? What are you looking for? Any budget or timeline in mind?" required></textarea></div>
+      <button type="submit" class="form-submit">Send Message <svg width="18" height="18" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+    </form>
+  </div>
+  <div class="s-reveal" style="transition-delay:.15s">
+    <div class="pg-split-label">Contact Info</div>
+    <div class="ci-item"><span class="ci-label">Email</span><span class="ci-val"><a href="mailto:Brushingmadeasy@gmail.com">Brushingmadeasy@gmail.com</a></span></div>
+    <div class="ci-item"><span class="ci-label">Phone</span><span class="ci-val"><a href="tel:6138695708">(613) 869-5708</a></span></div>
+    <div class="ci-item"><span class="ci-label">Location</span><span class="ci-val">Ottawa, Ontario, Canada</span></div>
+    <div class="ci-item"><span class="ci-label">Response Time</span><span class="ci-val">Within 24 hours</span></div>
+    <div class="free-call-box">
+      <div class="free-call-title">Free Discovery Call</div>
+      <div class="free-call-desc">Not sure what you need? Let's hop on a quick call. I'll review your goals, show you what's possible, and give you a clear roadmap — no pressure, no obligations.</div>
+    </div>
+  </div>
+</section>
+
+<footer class="footer">
+  <span class="footer-logo">String Sites<sup style="font-size:.45rem;vertical-align:super;font-weight:400">®</sup></span>
+  <ul class="footer-links"><li><a href="index.html">Home</a></li><li><a href="index.html#work">Work</a></li><li><a href="about.html">About</a></li><li><a href="contact.html">Contact</a></li></ul>
+  <div style="font-family:var(--font-mono);font-size:.6rem;color:var(--grey-400)"><a href="tel:6138695708">(613) 869-5708</a> · <a href="mailto:Brushingmadeasy@gmail.com">Brushingmadeasy@gmail.com</a></div>
+  <span class="footer-copy">© 2026 String Sites. All rights reserved.</span>
+</footer>
+
+<script>
+(function(){
+  var c=document.getElementById('cursor'),cx=0,cy=0,px=0,py=0;
+  document.addEventListener('mousemove',function(e){cx=e.clientX;cy=e.clientY});
+  (function l(){px+=(cx-px)*.12;py+=(cy-py)*.12;c.style.transform='translate('+px+'px,'+py+'px)';requestAnimationFrame(l)})();
+  document.querySelectorAll('a,button,.form-input,.form-textarea,.free-call-box').forEach(function(el){
+    el.addEventListener('mouseenter',function(){c.classList.add('hovering')});
+    el.addEventListener('mouseleave',function(){c.classList.remove('hovering')});
+  });
+  var ro=new IntersectionObserver(function(e){e.forEach(function(en){if(en.isIntersecting){en.target.classList.add('in-view');ro.unobserve(en.target)}})},{threshold:.12,rootMargin:'0px 0px -50px 0px'});
+  document.querySelectorAll('.s-reveal').forEach(function(el){ro.observe(el)});
+})();
+</script>
+</body>
+</html>

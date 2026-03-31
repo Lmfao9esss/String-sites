@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Development — String Sites®</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Epilogue:wght@300;400;500;600;700;800;900&family=Instrument+Serif:ital@0;1&family=DM+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --black: #0a0a0a; --white: #f5f2ed; --off-white: #e8e4dd;
+  --grey-100: #d4d0c9; --grey-200: #b0aba3; --grey-300: #8a847b;
+  --grey-400: #5c5750; --grey-500: #3a3632; --accent: #c8ff00;
+  --font-display: 'Instrument Serif', serif;
+  --font-body: 'Epilogue', sans-serif;
+  --font-mono: 'DM Mono', monospace;
+  --ease: cubic-bezier(0.16, 1, 0.3, 1);
+}
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+html{font-size:16px;-webkit-font-smoothing:antialiased}
+body{font-family:var(--font-body);background:var(--black);color:var(--white);overflow-x:hidden;cursor:none}
+a{color:inherit;text-decoration:none;cursor:none}button{cursor:none;border:none;background:none;font-family:inherit}
+::selection{background:var(--accent);color:var(--black)}
+
+.cursor{position:fixed;top:0;left:0;width:16px;height:16px;background:var(--accent);border-radius:50%;pointer-events:none;z-index:99999;mix-blend-mode:difference;transition:width 0.35s var(--ease),height 0.35s var(--ease),margin 0.35s var(--ease);margin:-8px 0 0 -8px}
+.cursor.hovering{width:56px;height:56px;margin:-28px 0 0 -28px}
+
+.grain{position:fixed;inset:-50%;width:200%;height:200%;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");pointer-events:none;z-index:9998;animation:grainShift 0.5s steps(4) infinite}
+@keyframes grainShift{0%{transform:translate(0,0)}25%{transform:translate(-2%,-1%)}50%{transform:translate(1%,2%)}75%{transform:translate(-1%,-2%)}100%{transform:translate(2%,1%)}}
+
+.nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:28px 48px;display:flex;align-items:center;justify-content:space-between;mix-blend-mode:difference}
+.nav-logo{font-family:var(--font-body);font-size:0.85rem;font-weight:700;letter-spacing:0.08em;text-transform:uppercase}
+.nav-logo sup{font-size:0.5rem;vertical-align:super;margin-left:2px;font-weight:400}
+.nav-right{display:flex;align-items:center;gap:40px}
+.nav-link{font-family:var(--font-mono);font-size:0.7rem;font-weight:400;letter-spacing:0.04em;text-transform:uppercase;color:var(--grey-200);transition:color 0.3s ease}
+.nav-link:hover{color:var(--white)}
+.nav-back{font-family:var(--font-mono);font-size:0.7rem;letter-spacing:0.04em;text-transform:uppercase;color:var(--grey-200);display:flex;align-items:center;gap:8px;transition:color 0.3s ease}
+.nav-back:hover{color:var(--white)}
+.nav-back svg{transition:transform 0.3s var(--ease)}
+.nav-back:hover svg{transform:translateX(-4px)}
+.nav-cta-pill{font-family:var(--font-mono);font-size:0.7rem;font-weight:500;letter-spacing:0.04em;text-transform:uppercase;padding:10px 24px;border-radius:100px;border:1px solid rgba(245,242,237,0.25);color:var(--white);transition:background 0.3s ease,color 0.3s ease}
+.nav-cta-pill:hover{background:var(--white);color:var(--black)}
+
+.s-reveal{opacity:0;transform:translateY(60px);transition:opacity 1s var(--ease),transform 1s var(--ease)}
+.s-reveal.in-view{opacity:1;transform:translateY(0)}
+.s-label{font-family:var(--font-mono);font-size:0.65rem;letter-spacing:0.14em;text-transform:uppercase;color:var(--grey-300);margin-bottom:20px;display:flex;align-items:center;gap:12px}
+.s-label::before{content:'';width:32px;height:1px;background:var(--grey-400)}
+
+/* Page Hero */
+.pg-hero{min-height:75vh;display:flex;flex-direction:column;justify-content:flex-end;padding:0 48px 80px;position:relative}
+.pg-hero-num{font-family:var(--font-mono);font-size:0.7rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--grey-400);margin-bottom:20px;overflow:hidden}
+.pg-hero-num span{display:inline-block;transform:translateY(100%);animation:slideUp 0.8s var(--ease) 0.3s forwards}
+.pg-hero-title{font-family:var(--font-display);font-size:clamp(3.5rem,9vw,9rem);font-weight:400;line-height:0.92;letter-spacing:-0.03em;margin-bottom:32px}
+.pg-hero-title .line{display:block;overflow:hidden}
+.pg-hero-title .line-inner{display:block;transform:translateY(110%);animation:slideUp 1s var(--ease) forwards}
+.pg-hero-title .line:nth-child(1) .line-inner{animation-delay:0.4s}
+.pg-hero-title .line:nth-child(2) .line-inner{animation-delay:0.55s}
+.pg-hero-title em{font-style:italic;color:var(--grey-300)}
+@keyframes slideUp{to{transform:translateY(0)}}
+.pg-hero-sub{max-width:560px;font-size:1rem;font-weight:300;line-height:1.8;color:var(--grey-200);opacity:0;animation:fadeIn 1s ease 1s forwards}
+@keyframes fadeIn{to{opacity:1}}
+
+/* Content sections */
+.pg-section{padding:100px 48px}
+.pg-section-border{border-top:1px solid rgba(245,242,237,0.06)}
+.pg-split{display:grid;grid-template-columns:1fr 1fr;gap:100px;align-items:start}
+.pg-split-label{font-family:var(--font-mono);font-size:0.65rem;letter-spacing:0.14em;text-transform:uppercase;color:var(--grey-400);margin-bottom:28px;display:flex;align-items:center;gap:12px}
+.pg-split-label::before{content:'';width:24px;height:1px;background:var(--grey-400)}
+.pg-heading{font-family:var(--font-display);font-size:clamp(2rem,4.5vw,4rem);font-weight:400;line-height:1.05;letter-spacing:-0.02em;margin-bottom:28px}
+.pg-heading em{font-style:italic;color:var(--grey-300)}
+.pg-text{font-size:0.95rem;font-weight:300;line-height:1.85;color:var(--grey-200);margin-bottom:20px}
+.pg-text:last-child{margin-bottom:0}
+
+/* Process Steps */
+.pg-step{display:grid;grid-template-columns:48px 1fr;gap:20px;padding:32px 0;border-top:1px solid rgba(245,242,237,0.06)}
+.pg-step:last-child{border-bottom:1px solid rgba(245,242,237,0.06)}
+.pg-step-num{font-family:var(--font-mono);font-size:0.65rem;color:var(--accent);padding-top:4px}
+.pg-step-title{font-family:var(--font-display);font-size:1.4rem;font-weight:400;margin-bottom:8px}
+.pg-step-desc{font-size:0.85rem;font-weight:300;line-height:1.7;color:var(--grey-300);max-width:500px}
+
+/* Deliverables grid */
+.pg-deliv-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:20px}
+.pg-deliv{padding:24px;border:1px solid rgba(245,242,237,0.06);border-radius:12px;transition:border-color 0.3s ease}
+.pg-deliv:hover{border-color:rgba(245,242,237,0.15)}
+.pg-deliv-icon{font-size:1.3rem;margin-bottom:10px}
+.pg-deliv-name{font-size:0.9rem;font-weight:600;margin-bottom:4px}
+.pg-deliv-desc{font-size:0.78rem;font-weight:300;color:var(--grey-300);line-height:1.6}
+
+/* Big stat */
+.pg-stat-bar{padding:80px 48px;border-top:1px solid rgba(245,242,237,0.06);border-bottom:1px solid rgba(245,242,237,0.06);display:flex;justify-content:center;gap:100px}
+.pg-stat{text-align:center}
+.pg-stat-val{font-family:var(--font-display);font-size:4rem;font-weight:400;color:var(--accent);line-height:1}
+.pg-stat-label{font-family:var(--font-mono);font-size:0.65rem;letter-spacing:0.06em;text-transform:uppercase;color:var(--grey-300);margin-top:10px}
+
+/* CTA */
+.pg-cta{min-height:60vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:100px 48px;border-top:1px solid rgba(245,242,237,0.06)}
+.pg-cta-heading{font-family:var(--font-display);font-size:clamp(2.5rem,6vw,6rem);font-weight:400;line-height:0.95;letter-spacing:-0.03em;margin-bottom:28px}
+.pg-cta-heading em{font-style:italic;color:var(--grey-300)}
+.pg-cta-sub{max-width:420px;font-size:0.9rem;font-weight:300;line-height:1.7;color:var(--grey-200);margin-bottom:36px}
+.pg-cta-btn{display:inline-flex;align-items:center;gap:12px;padding:20px 48px;border-radius:100px;background:var(--accent);color:var(--black);font-size:0.88rem;font-weight:700;letter-spacing:0.02em;text-transform:uppercase;transition:transform 0.35s var(--ease),box-shadow 0.35s ease}
+.pg-cta-btn:hover{transform:translateY(-3px);box-shadow:0 12px 40px rgba(200,255,0,0.15)}
+.pg-cta-btn svg{transition:transform 0.3s var(--ease)}
+.pg-cta-btn:hover svg{transform:translateX(4px)}
+
+/* Footer */
+.footer{padding:40px 48px;border-top:1px solid rgba(245,242,237,0.06);display:flex;align-items:center;justify-content:space-between}
+.footer-logo{font-family:var(--font-body);font-size:0.75rem;font-weight:700;letter-spacing:0.08em;text-transform:uppercase}
+.footer-links{display:flex;gap:32px;list-style:none}
+.footer-links a{font-family:var(--font-mono);font-size:0.65rem;color:var(--grey-400);letter-spacing:0.04em;text-transform:uppercase;transition:color 0.3s ease}
+.footer-links a:hover{color:var(--white)}
+.footer-copy{font-family:var(--font-mono);font-size:0.6rem;color:var(--grey-400)}
+
+@media(max-width:1024px){.pg-split{grid-template-columns:1fr;gap:60px}.pg-stat-bar{flex-wrap:wrap;gap:48px}}
+@media(max-width:768px){
+  .nav{padding:20px 24px}.nav-link{display:none}.pg-hero{padding:0 24px 50px;min-height:65vh}
+  .pg-section{padding:70px 24px}.pg-deliv-grid{grid-template-columns:1fr}
+  .pg-stat-bar{padding:50px 24px;gap:36px}.pg-cta{padding:70px 24px}
+  .footer{padding:30px 24px;flex-direction:column;gap:16px;text-align:center}.footer-links{flex-wrap:wrap;justify-content:center}
+  .cursor{display:none}body{cursor:auto}a,button{cursor:pointer}
+}
+</style>
+</head>
+<body>
+<div class="cursor" id="cursor"></div>
+<div class="grain"></div>
+
+<nav class="nav">
+  <a href="index.html" class="nav-logo">String Sites<sup>®</sup></a>
+  <div class="nav-right">
+    <a href="index.html" class="nav-back"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M13 8H3M7 4l-4 4 4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg> Back</a>
+    <a href="#" class="nav-cta-pill">Let's Talk</a>
+  </div>
+</nav>
+
+<section class="pg-hero">
+  <div class="pg-hero-num"><span>02 — Development</span></div>
+  <h1 class="pg-hero-title">
+    <span class="line"><span class="line-inner">Development</span></span>
+    <span class="line"><span class="line-inner"><em>built to last.</em></span></span>
+  </h1>
+  <p class="pg-hero-sub">Clean, fast, future-proof code. Your site loads in under 2 seconds, scores 95+ on Lighthouse, and works flawlessly on every device and browser — guaranteed.</p>
+</section>
+
+<div class="pg-stat-bar s-reveal">
+  <div class="pg-stat"><div class="pg-stat-val"><2s</div><div class="pg-stat-label">Page load time target</div></div><div class="pg-stat"><div class="pg-stat-val">95+</div><div class="pg-stat-label">Lighthouse performance score</div></div><div class="pg-stat"><div class="pg-stat-val">100%</div><div class="pg-stat-label">Cross-browser compatibility</div></div>
+</div>
+
+<section class="pg-section pg-section-border">
+  <div class="pg-split">
+    <div class="s-reveal">
+      <div class="pg-split-label">Overview</div>
+      <h2 class="pg-heading">Engineering <em>excellence</em></h2>
+    </div>
+    <div class="s-reveal" style="transition-delay:0.1s">
+      <p class="pg-text">We write code the way it should be written — semantic, accessible, performant, and maintainable. No bloated frameworks where they're not needed. No shortcuts. Every line serves a purpose. Your site isn't just fast today — it's built to scale and easy to maintain for years.</p>
+    </div>
+  </div>
+</section>
+
+<section class="pg-section pg-section-border">
+  <div class="s-reveal" style="margin-bottom:48px">
+    <div class="pg-split-label">Process</div>
+    <h2 class="pg-heading">How we <em>work.</em></h2>
+  </div>
+  <div class="pg-step s-reveal" style="transition-delay:0.0s"><div class="pg-step-num">01</div><div><div class="pg-step-title">Environment & Architecture</div><div class="pg-step-desc">We set up the tech stack, hosting infrastructure, version control, and deployment pipeline before writing a single line of code.</div></div></div><div class="pg-step s-reveal" style="transition-delay:0.06s"><div class="pg-step-num">02</div><div><div class="pg-step-title">Frontend Build</div><div class="pg-step-desc">Semantic HTML, modular CSS, and clean JavaScript. Responsive from the ground up. Every animation buttery smooth at 60fps.</div></div></div><div class="pg-step s-reveal" style="transition-delay:0.12s"><div class="pg-step-num">03</div><div><div class="pg-step-title">Backend & CMS Integration</div><div class="pg-step-desc">If you need a content management system, forms, booking, or e-commerce — we integrate it seamlessly without sacrificing speed.</div></div></div><div class="pg-step s-reveal" style="transition-delay:0.18s"><div class="pg-step-num">04</div><div><div class="pg-step-title">Testing & Launch</div><div class="pg-step-desc">Cross-browser testing, accessibility audit, performance optimization, SSL setup, and a zero-downtime launch.</div></div></div>
+</section>
+
+<section class="pg-section pg-section-border">
+  <div class="s-reveal" style="margin-bottom:40px">
+    <div class="pg-split-label">Deliverables</div>
+    <h2 class="pg-heading">What you <em>get.</em></h2>
+  </div>
+  <div class="pg-deliv-grid">
+    <div class="pg-deliv s-reveal" style="transition-delay:0.0s"><div class="pg-deliv-icon">⚡</div><div class="pg-deliv-name">Performance Optimization</div><div class="pg-deliv-desc">Image compression, lazy loading, code splitting, CDN delivery.</div></div><div class="pg-deliv s-reveal" style="transition-delay:0.05s"><div class="pg-deliv-icon">📱</div><div class="pg-deliv-name">Responsive Development</div><div class="pg-deliv-desc">Tested on 20+ device/browser combinations.</div></div><div class="pg-deliv s-reveal" style="transition-delay:0.1s"><div class="pg-deliv-icon">♿</div><div class="pg-deliv-name">Accessibility (WCAG)</div><div class="pg-deliv-desc">Semantic markup, ARIA labels, keyboard navigation, screen reader support.</div></div><div class="pg-deliv s-reveal" style="transition-delay:0.15000000000000002s"><div class="pg-deliv-icon">🔒</div><div class="pg-deliv-name">Security & SSL</div><div class="pg-deliv-desc">HTTPS, security headers, input sanitization, best practices.</div></div><div class="pg-deliv s-reveal" style="transition-delay:0.2s"><div class="pg-deliv-icon">🚀</div><div class="pg-deliv-name">Hosting & Deployment</div><div class="pg-deliv-desc">Managed hosting setup with automated deployments and backups.</div></div><div class="pg-deliv s-reveal" style="transition-delay:0.25s"><div class="pg-deliv-icon">📝</div><div class="pg-deliv-name">CMS Integration</div><div class="pg-deliv-desc">Easy content editing without touching code — if you need it.</div></div>
+  </div>
+</section>
+
+<section class="pg-cta s-reveal">
+  <div class="s-label">Next Step</div>
+  <h2 class="pg-cta-heading">Ready to<br><em>get started?</em></h2>
+  <p class="pg-cta-sub">Book a free discovery call and we'll map out exactly what your business needs.</p>
+  <a href="contact.html" class="pg-cta-btn">Start Your Project <svg width="18" height="18" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+</section>
+<footer class="footer">
+  <span class="footer-logo">String Sites<sup style="font-size:0.45rem;vertical-align:super;font-weight:400">®</sup></span>
+  <ul class="footer-links"><li><a href="index.html">Home</a></li><li><a href="index.html#work">Work</a></li><li><a href="about.html">About</a></li><li><a href="contact.html">Contact</a></li></ul>
+  <span class="footer-copy">© 2026 String Sites. All rights reserved.</span>
+</footer>
+<script>
+(function(){
+  var cursor=document.getElementById('cursor'),cx=0,cy=0,px=0,py=0;
+  document.addEventListener('mousemove',function(e){cx=e.clientX;cy=e.clientY});
+  (function loop(){px+=(cx-px)*0.12;py+=(cy-py)*0.12;cursor.style.transform='translate('+px+'px,'+py+'px)';requestAnimationFrame(loop)})();
+  document.querySelectorAll('a,button,.pg-deliv,.pg-step').forEach(function(el){
+    el.addEventListener('mouseenter',function(){cursor.classList.add('hovering')});
+    el.addEventListener('mouseleave',function(){cursor.classList.remove('hovering')});
+  });
+  var ro=new IntersectionObserver(function(e){e.forEach(function(en){if(en.isIntersecting){en.target.classList.add('in-view');ro.unobserve(en.target)}})},{threshold:0.12,rootMargin:'0px 0px -50px 0px'});
+  document.querySelectorAll('.s-reveal').forEach(function(el){ro.observe(el)});
+})();
+</script>
+</body>
+</html>
